@@ -11,7 +11,6 @@ const Chat = () => {
     const dispatch = useDispatch()
     const data = useSelector(state => state.content);
     const content = useSelector(state => state.contentData);
-    // const chat = useSelector(state => state.chats);
     let user = auth().currentUser;
     const chats = JSON.parse(localStorage.getItem('data'))
 
@@ -31,7 +30,6 @@ const Chat = () => {
             dispatch(read({ readError: error.message, loadingChats: false }));
         }
     }, [])
-
     const handleChange = (event) => {
         dispatch(setContent(event.target.value))
     }

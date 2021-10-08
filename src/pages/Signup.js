@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setData, setError } from '../Actions/action';
-import { signup, signInWithGoogle, signInWithGitHub } from '../helpers/auth';
+import { signup, signInWithGoogle, signInWithGitHub } from '../helpers/thunk';
 
 const Signup = () => {
     const dispatch = useDispatch();
@@ -9,29 +9,16 @@ const Signup = () => {
     const handleChange = event => {
         dispatch(setData({ ...data, [event.target.name]: event.target.value }))
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(setError({ error: '' }))
-        try {
-            await signup(data.email, data.password);
-        } catch (error) {
-            dispatch(setError({ error: error.message }))
-        }
+        dispatch(signup(data.email, data.password));
     }
-    const googleSignIn = async () => {
-        try {
-            await signInWithGoogle();
-        } catch (error) {
-            dispatch(setError({ error: error.message }))
-        }
+    const googleSignIn = () => {
+        dispatch(signInWithGoogle())
     }
-    const githubSignIn = async () => {
-        try {
-            await signInWithGitHub();
-        } catch (error) {
-            console.log(error)
-            dispatch(setError({ error: error.message }))
-        }
+    const githubSignIn = () => {
+        dispatch(signInWithGitHub())
     }
     return (
         <div>

@@ -52,14 +52,14 @@ const reducer = (state = initialState, action) => {
                 content: action.payload
             }
         case CHATS:
-            console.log(action.payload)
+            // console.log(action.payload)
             localStorage.setItem('data', JSON.stringify(action.payload))
             return {
                 ...state,
                 chats: action.payload
             }
         case SET_VALUES:
-            console.log(action.payload)
+            // console.log(action.payload)
             state.content.writeError = action.payload
             return {
                 ...state,

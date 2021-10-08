@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../services/firebase';
-
+import { logout } from '../helpers/thunk';
+import { useDispatch } from 'react-redux';
 function Header() {
+    const dispatch = useDispatch();
+    const Logout = () => {
+        dispatch(logout())
+    }
     return (
         <header>
             <nav className="navbar navbar-expand-sm fixed-top navbar-light bg-light">
@@ -14,7 +19,7 @@ function Header() {
                     {auth().currentUser
                         ? <div className="navbar-nav">
                             <Link className="nav-item nav-link mr-3" to="/chat">Profile</Link>
-                            <button className="btn btn-primary mr-3" onClick={() => auth().signOut()}>Logout</button>
+                            <button className="btn btn-primary mr-3" onClick={Logout}>Logout</button>
                         </div>
                         : <div className="navbar-nav">
                             <Link className="nav-item nav-link mr-3" to="/login">Sign In</Link>

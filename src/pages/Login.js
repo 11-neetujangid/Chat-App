@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
-import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/auth";
 import { setData, setError } from "../Actions/action";
+import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/thunk";
+
 const Login = () => {
     const dispatch = useDispatch();
     const data = useSelector(state => state.data);
@@ -10,26 +11,14 @@ const Login = () => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        dispatch(setError({ error: "" }))
-        try {
-            await signin(data.email, data.password);
-        } catch (error) {
-            dispatch(setError({ error: error.message }))
-        }
+        dispatch(setError({ error: "" }));
+        dispatch(signin(data.email, data.password));
     }
     const googleSignIn = async () => {
-        try {
-            await signInWithGoogle();
-        } catch (error) {
-            dispatch(setError({ error: error.message }))
-        }
+        dispatch(signInWithGoogle());
     }
     const githubSignIn = async () => {
-        try {
-            await signInWithGitHub();
-        } catch (error) {
-            dispatch(setError({ error: error.message }))
-        }
+        dispatch(signInWithGitHub());
     }
     return (
         <div className="container">
@@ -85,7 +74,6 @@ const Login = () => {
                     Don't have an account? <Link to="/signup">Sign up</Link>
                 </p>
             </form>
-
         </div>
     )
 }
